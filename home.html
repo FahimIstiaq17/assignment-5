@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Issues Tracker</title>
+    <link
+      rel="shortcut icon"
+      href="./assets/github-logo.png"
+      type="image/x-icon"
+    />
+
+    <!-- tailwind and daisy  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- fonts link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons link font awesome  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      * {
+        font-family: "Geist", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="bg-[#F8FAFC]">
+
+    <!--Main Page  Nav bar and cards -->
+    <section class="">
+      <nav
+        class="bg-white flex justify-between items-center px-20 py-6 shadow-xs"
+      >
+        <div class="flex gap-1.5 items-center">
+          <img src="./assets/github-logo.png" alt="" class="w-9" />
+          <h1 class="font-semibold text-2xl">GitHub Issues Tracker</h1>
+        </div>
+        <div class="flex gap-4">
+          <input
+            type="text"
+            placeholder="Search issues..."
+            class="input input-bordered w-24 md:w-auto"
+          />
+          <button class="btn btn-primary bg-[#4A00FF]">
+            <i class="fa-solid fa-plus"></i>New Issue
+          </button>
+        </div>
+      </nav>
+
+      <!-- Tab section button -->
+      <div class="w-11/12 mx-auto mt-15 bg-white rounded-md shadow-sm p-6">
+        <div class="flex flex-wrap space-x-2">
+          <button
+            id="tab-all"
+            onclick="switchTab('all')"
+            class="btn btn-soft btn-primary bg-white text-[#64748B] hover:bg-[#4A00FF] hover:text-white"
+          >
+            All
+          </button>
+          <button
+            id="tab-open"
+            onclick="switchTab('open')"
+            class="btn btn-soft btn-primary bg-white text-[#64748B] hover:bg-[#4A00FF] hover:text-white"
+          >
+            Open
+          </button>
+          <button
+            id="tab-closed"
+            onclick="switchTab('closed')"
+            class="btn btn-soft btn-primary bg-white text-[#64748B] hover:bg-[#4A00FF] hover:text-white"
+          >
+            Closed
+          </button>
+        </div>
+      </div>
+
+      <!-- Nav Total Cards  -->
+      <div
+        class="w-11/12 mx-auto mt-4 p-6 bg-white rounded-md shadow-sm flex justify-between items-center"
+      >
+        <div class="flex gap-3">
+          <div class="bg-[#ECE4FF] rounded-full w-[50px] flex">
+            <img src="./assets/Aperture.png" alt="" class="" />
+          </div>
+          <div>
+            <h1 class="font-semibold text-2xl">50 Issues</h1>
+            <p class="text-[#64748B]">Track and manage your project issues</p>
+          </div>
+        </div>
+
+        <div class="flex gap-5">
+          <p class="text-[#1F2937] font-medium">
+            <i class="fa-solid fa-circle text-[#00A96E]"></i>Open
+          </p>
+          <p class="text-[#1F2937] font-medium">
+            <i class="fa-solid fa-circle text-[#A855F7]"></i>Closed
+          </p>
+        </div>
+      </div>
+
+      <!-- All Cards -->
+      <div
+        class="bg-[#FBFBFB] w-11/12 mx-auto mt-0.5 p-6 rounded-md shadow-sm grid grid-cols-4 gap-4"
+      >
+        <!-- CARD 1-->
+        <div class="Card-1 bg-[#FFFFFF] p-4 rounded-md shadow-md">
+          <!-- status & Priority -->
+          <div class="flex items-center justify-between">
+            <i
+              class="fa-solid fa-circle-notch bg-[#CBFADB] rounded-full text-[#00A96E]"
+            ></i>
+            <p class="bg-[#FEECEC] rounded-full text-[#EF4444] py-1.5 px-6">
+              HIGH
+            </p>
+          </div>
+
+          <div class="my-4 space-y-2">
+            <h1 class="font-semibold text-[#1F2937] text-[20px]">
+              Fix navigation menu on mobile devices
+            </h1>
+            <p class="text-[#64748B]">
+              The navigation menu doesn't collapse properly on mobile devices...
+            </p>
+            <div class="Button flex gap-3">
+              <button
+                class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444]"
+              >
+                <i class="fa-solid fa-bug"></i>BUG
+              </button>
+              <button
+                class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706]"
+              >
+                <i class="fa-solid fa-life-ring"></i>HELP WANTED
+              </button>
+            </div>
+          </div>
+
+          <hr class="border-gray-300 pb-4" />
+
+          <div class="text-[#64748B]">
+            <p class="">#1 by john_doe</p>
+            <p>1/15/2024</p>
+          </div>
+        </div>
+        <!-- CARD 2-->
+        <div class="Card-1 bg-[#FFFFFF] p-4 rounded-md shadow-md">
+          <!-- status & Priority -->
+          <div class="flex items-center justify-between">
+            <i
+              class="fa-solid fa-circle-notch bg-[#CBFADB] rounded-full text-[#00A96E]"
+            ></i>
+            <p class="bg-[#FFF6D1] rounded-full text-[#F59E0B] py-1.5 px-6">
+              MEDIUM
+            </p>
+          </div>
+
+          <div class="my-4 space-y-2">
+            <h1 class="font-semibold text-[#1F2937] text-[20px]">
+              Fix navigation menu on mobile devices
+            </h1>
+            <p class="text-[#64748B]">
+              The navigation menu doesn't collapse properly on mobile devices...
+            </p>
+            <div class="Button flex gap-3">
+              <button
+                class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444]"
+              >
+                <i class="fa-solid fa-bug"></i>BUG
+              </button>
+              <button
+                class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706]"
+              >
+                <i class="fa-solid fa-life-ring"></i>HELP WANTED
+              </button>
+            </div>
+          </div>
+
+          <hr class="border-gray-300 pb-4" />
+
+          <div class="text-[#64748B]">
+            <p class="">#1 by john_doe</p>
+            <p>1/15/2024</p>
+          </div>
+        </div>
+        <!-- CARD 3-->
+        <div class="Card-1 bg-[#FFFFFF] p-4 rounded-md shadow-md">
+          <!-- status & Priority -->
+          <div class="flex items-center justify-between">
+            <i
+              class="fa-solid fa-circle-check bg-[#F0E2FF] rounded-full text-[#A855F7]"
+            ></i>
+            <p class="bg-[#EEEFF2] rounded-full text-[#9CA3AF] py-1.5 px-6">
+              LOW
+            </p>
+          </div>
+
+          <div class="my-4 space-y-2">
+            <h1 class="font-semibold text-[#1F2937] text-[20px]">
+              Fix navigation menu on mobile devices
+            </h1>
+            <p class="text-[#64748B]">
+              The navigation menu doesn't collapse properly on mobile devices...
+            </p>
+            <div class="Button flex gap-3">
+              <button
+                class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444]"
+              >
+                <i class="fa-solid fa-bug"></i>BUG
+              </button>
+              <button
+                class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706]"
+              >
+                <i class="fa-solid fa-life-ring"></i>HELP WANTED
+              </button>
+            </div>
+          </div>
+
+          <hr class="border-gray-300 pb-4" />
+
+          <div class="text-[#64748B]">
+            <p class="">#1 by john_doe</p>
+            <p>1/15/2024</p>
+          </div>
+        </div>
+        <!-- CARD 4-->
+        <div class="Card-1 bg-[#FFFFFF] p-4 rounded-md shadow-md">
+          <!-- status & Priority -->
+          <div class="flex items-center justify-between">
+            <i
+              class="fa-solid fa-circle-notch bg-[#CBFADB] rounded-full text-[#00A96E]"
+            ></i>
+            <p class="bg-[#FEECEC] rounded-full text-[#EF4444] py-1.5 px-6">
+              HIGH
+            </p>
+          </div>
+
+          <div class="my-4 space-y-2">
+            <h1 class="font-semibold text-[#1F2937] text-[20px]">
+              Fix navigation menu on mobile devices
+            </h1>
+            <p class="text-[#64748B]">
+              The navigation menu doesn't collapse properly on mobile devices...
+            </p>
+            <div class="Button flex gap-3">
+              <button
+                class="bg-[#BBF7D0] rounded-full py-1.5 px-5 font-medium text-[#00A96E]"
+              >
+                <i class="fa-solid fa-star"></i>ENHANCEMENT
+              </button>
+            </div>
+          </div>
+
+          <hr class="border-gray-300 pb-4" />
+
+          <div class="text-[#64748B]">
+            <p class="">#1 by john_doe</p>
+            <p>1/15/2024</p>
+          </div>
+        </div>
+        <!-- CARD 1-->
+        <div class="Card-1 bg-[#FFFFFF] p-4 rounded-md shadow-md">
+          <!-- status & Priority -->
+          <div class="flex items-center justify-between">
+            <i
+              class="fa-solid fa-circle-notch bg-[#CBFADB] rounded-full text-[#00A96E]"
+            ></i>
+            <p class="bg-[#FEECEC] rounded-full text-[#EF4444] py-1.5 px-6">
+              HIGH
+            </p>
+          </div>
+
+          <div class="my-4 space-y-2">
+            <h1 class="font-semibold text-[#1F2937] text-[20px]">
+              Fix navigation menu on mobile devices
+            </h1>
+            <p class="text-[#64748B]">
+              The navigation menu doesn't collapse properly on mobile devices...
+            </p>
+            <div class="Button flex gap-3">
+              <button
+                class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444]"
+              >
+                <i class="fa-solid fa-bug"></i>BUG
+              </button>
+              <button
+                class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706]"
+              >
+                <i class="fa-solid fa-life-ring"></i>HELP WANTED
+              </button>
+            </div>
+          </div>
+
+          <hr class="border-gray-300 pb-4" />
+
+          <div class="text-[#64748B]">
+            <p class="">#1 by john_doe</p>
+            <p>1/15/2024</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
