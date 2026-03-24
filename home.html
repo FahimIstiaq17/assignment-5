@@ -43,74 +43,87 @@
   </head>
 
   <body class="bg-[#F8FAFC]">
-
     <!--Main Page  Nav bar and cards -->
     <section class="">
       <nav
-        class="bg-white flex justify-between items-center px-20 py-6 shadow-xs"
+        class="bg-white flex justify-between items-center px-4 sm:px-20 py-4 sm:p-6 shadow-sm flex-row gap-3"
       >
-        <div class="flex gap-1.5 items-center">
-          <img src="./assets/github-logo.png" alt="" class="w-9" />
-          <h1 class="font-semibold text-2xl">GitHub Issues Tracker</h1>
+        <div class="flex gap-1.5 items-center shrink-0">
+          <img src="./assets/github-logo.png" alt="" class="w-7 sm:w-9" />
+          <h1 class="font-semibold text-lg sm:text-2xl">
+            GitHub Issues Tracker
+          </h1>
         </div>
-        <div class="flex gap-4">
+        <div class="flex gap-1.5 items-center flex-wrap">
           <input
             type="text"
             placeholder="Search issues..."
-            class="input input-bordered w-24 md:w-auto"
+            class="input input-bordered w-15 sm:w-auto"
           />
-          <button class="btn btn-primary bg-[#4A00FF]">
+          <button
+            class="btn btn-primary bg-[#4A00FF] flex items-center gap-2 w-15 sm:w-auto text-[12px] sm:text-sm"
+          >
             <i class="fa-solid fa-plus"></i>New Issue
           </button>
         </div>
       </nav>
 
       <!-- Tab section button -->
-      <div class="w-11/12 mx-auto mt-15 bg-white rounded-md shadow-sm p-6">
-        <div class="flex flex-wrap space-x-2">
+      <!-- <div id="tab-container"> </div> -->
+
+      <!-- categories -->
+      <div
+        class="w-11/12 mx-auto mt-8 sm:mt-15 bg-white rounded-md shadow-sm p-3 sm:p-6"
+      >
+        <div class="flex flex-wrap gap-2">
           <button
-            id="tab-all"
+            id="issuesAll"
             onclick="switchTab('all')"
-            class="btn btn-soft btn-primary bg-white text-[#64748B] hover:bg-[#4A00FF] hover:text-white"
+            class="btn btn-soft btn-primary"
           >
             All
           </button>
-          <button
-            id="tab-open"
-            onclick="switchTab('open')"
-            class="btn btn-soft btn-primary bg-white text-[#64748B] hover:bg-[#4A00FF] hover:text-white"
-          >
-            Open
-          </button>
-          <button
-            id="tab-closed"
-            onclick="switchTab('closed')"
-            class="btn btn-soft btn-primary bg-white text-[#64748B] hover:bg-[#4A00FF] hover:text-white"
-          >
-            Closed
-          </button>
+          <!-- Categories container -->
+          <div id="categoriesContainer" class="flex gap-2">
+            <button
+              id="tab-open"
+              onclick="switchTab('open')"
+              class="btn btn-soft btn-primary"
+            >
+              Open
+            </button>
+            <button
+              id="tab-closed"
+              onclick="switchTab('closed')"
+              class="btn btn-soft btn-primary"
+            >
+              Closed
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- Nav Total Cards  -->
       <div
-        class="w-11/12 mx-auto mt-4 p-6 bg-white rounded-md shadow-sm flex justify-between items-center"
+        class="w-11/12 mx-auto mt-4 p-3 sm:p-6 bg-white rounded-md shadow-sm flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4"
       >
-        <div class="flex gap-3">
-          <div class="bg-[#ECE4FF] rounded-full w-[50px] flex">
+        <div class="flex gap-3 items-center">
+          <div
+            class="bg-[#ECE4FF] rounded-full w-10 h-10 sm:w-[50px] sm:h-[50px] flex items-center justify-center"
+          >
             <img src="./assets/Aperture.png" alt="" class="" />
           </div>
           <div>
-            <h1 class="font-semibold text-2xl">50 Issues</h1>
+            <h1 class="font-semibold text-xl sm:text-2xl">50 Issues</h1>
             <p class="text-[#64748B]">Track and manage your project issues</p>
           </div>
         </div>
 
         <div class="flex gap-5">
-          <p class="text-[#1F2937] font-medium">
+          <p class="text-[#1F2937] font-medium flex items-center gap-2">
             <i class="fa-solid fa-circle text-[#00A96E]"></i>Open
           </p>
-          <p class="text-[#1F2937] font-medium">
+          <p class="text-[#1F2937] font-medium flex items-center gap-2">
             <i class="fa-solid fa-circle text-[#A855F7]"></i>Closed
           </p>
         </div>
@@ -118,46 +131,57 @@
 
       <!-- All Cards -->
       <div
-        class="bg-[#FBFBFB] w-11/12 mx-auto mt-0.5 p-6 rounded-md shadow-sm grid grid-cols-4 gap-4"
+        id="issuesContainer"
+        class="bg-[#FBFBFB] w-11/12 mx-auto mt-0.5 p-3 lg:p-6 rounded-md shadow-sm grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-4"
       >
-        <!-- CARD 1-->
-        <div class="Card-1 bg-[#FFFFFF] p-4 rounded-md shadow-md">
-          <!-- status & Priority -->
-          <div class="flex items-center justify-between">
-            <i
-              class="fa-solid fa-circle-notch bg-[#CBFADB] rounded-full text-[#00A96E]"
-            ></i>
-            <p class="bg-[#FEECEC] rounded-full text-[#EF4444] py-1.5 px-6">
-              HIGH
-            </p>
-          </div>
-
-          <div class="my-4 space-y-2">
-            <h1 class="font-semibold text-[#1F2937] text-[20px]">
-              Fix navigation menu on mobile devices
-            </h1>
-            <p class="text-[#64748B]">
-              The navigation menu doesn't collapse properly on mobile devices...
-            </p>
-            <div class="Button flex gap-3">
-              <button
-                class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444]"
-              >
-                <i class="fa-solid fa-bug"></i>BUG
-              </button>
-              <button
-                class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706]"
-              >
-                <i class="fa-solid fa-life-ring"></i>HELP WANTED
-              </button>
+        <!-- CARD  dynamically added here -->
+        <div class="bg-[#00A96E] pt-1.5 rounded-xl">
+          <div id="card1" class="bg-[#FFFFFF] p-4 rounded-md shadow-md">
+            <!-- status & Priority -->
+            <div
+              class="flex items-center justify-between align-middle"
+            >
+              <div class="w-8 h-8 bg-[#CBFADB] rounded-full">
+                <i class="fa-solid fa-circle-notch text-[#00A96E] leading-none"></i>
+              </div>
+              <p class="bg-[#FEECEC] rounded-full text-[#EF4444] py-1.5 px-6">
+                HIGH
+              </p>
             </div>
-          </div>
 
-          <hr class="border-gray-300 pb-4" />
+            <div class="my-4 space-y-2">
+              <h1 class="font-semibold text-[#1F2937] text-[20px]">
+                Fix navigation menu on mobile devices
+              </h1>
+              <p class="text-[#64748B]">
+                The navigation menu doesn't collapse properly on mobile
+                devices...
+              </p>
+              <div class="Button flex gap-3">
+                <div
+                  class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444] outline-1"
+                >
+                  <span class="space-x-1.5"
+                    ><i class="fa-solid fa-bug"></i><span>BUG</span></span
+                  >
+                </div>
+                <div
+                  class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706] outline-1"
+                >
+                  <span class="space-x-1.5"
+                    ><i class="fa-solid fa-life-ring"></i
+                    ><span>HELP WANTED</span></span
+                  >
+                </div>
+              </div>
+            </div>
 
-          <div class="text-[#64748B]">
-            <p class="">#1 by john_doe</p>
-            <p>1/15/2024</p>
+            <hr class="border-gray-300 pb-4" />
+
+            <div class="text-[#64748B]">
+              <p class="">#1 by john_doe</p>
+              <p>1/15/2024</p>
+            </div>
           </div>
         </div>
         <!-- CARD 2-->
@@ -314,6 +338,54 @@
             <p class="">#1 by john_doe</p>
             <p>1/15/2024</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PopUp tab -->
+    <section class="hidden max-w-[700px] mx-auto">
+      <div class="bg-white rounded-2xl p-8">
+        <h1 class="font-bold text-2xl text-[#1F2937]">
+          Fix broken image uploads
+        </h1>
+        <div class="flex items-center space-x-3 pt-2">
+          <button class="bg-[#00A96E] text-white rounded-full py-1.5 px-3">
+            Opened
+          </button>
+          <p class="text-[#64748B]">Opened by Fahim Ahmed</p>
+          <p class="text-[#64748B]">22/02/2026</p>
+        </div>
+        <div class="Button flex gap-3 py-6">
+          <button
+            class="bg-[#FEECEC] rounded-full py-1.5 px-5 font-medium text-[#EF4444]"
+          >
+            <i class="fa-solid fa-bug"></i>BUG
+          </button>
+          <button
+            class="bg-[#FFF8DB] rounded-full py-1.5 px-5 font-medium text-[#D97706]"
+          >
+            <i class="fa-solid fa-life-ring"></i>HELP WANTED
+          </button>
+        </div>
+        <p class="text-[#64748B]">
+          The navigation menu doesn't collapse properly on mobile devices. Need
+          to fix the responsive behavior.
+        </p>
+        <div class="bg-[#F8FAFC] p-5 grid grid-cols-2 rounded-md my-6">
+          <div class="">
+            <p class="text-[#64748B]">Assignee:</p>
+            <h1 class="font-semibold text-[#1F2937]">Fahim Ahmed</h1>
+          </div>
+          <div class="">
+            <p class="text-[#64748B]">Priority:</p>
+            <button class="bg-[#EF4444] text-white rounded-full py-0.5 px-3">
+              HIGH
+            </button>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <p></p>
+          <button class="btn btn-primary">Close</button>
         </div>
       </div>
     </section>
