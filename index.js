@@ -149,9 +149,6 @@ function displayIssues(issues) {
   });
 }
 
-// document.getElementById("issuesAll").classList.remove("bg-red-700" , "text-white");
-// document.getElementById("tab-open").classList.remove("bg-[#4A00FF]" , "text-white");
-// document.getElementById("tab-closed").classList.remove("bg-[#4A00FF]" , "text-white");
 
 function activeButton(activated) {
   const buttons = document.querySelectorAll(".tab-btn");
@@ -168,11 +165,17 @@ function activeButton(activated) {
   activeBtn.classList.add("bg-[#4A00FF]", "text-white");
 }
 
+
+function issueCount(issues) {
+  document.getElementById("total-count").innerText = issues.length;
+}
+
 // Switch tabs
 function switchTab(type) {
   if (type === "all") {
     activeButton("issuesAll");
     displayIssues(allIssues);
+    issueCount(allIssues);
   } 
   else if (type === "open") {
     activeButton("tab-open");
@@ -180,6 +183,7 @@ function switchTab(type) {
       (issue) => issue.status.toLowerCase() === "open",
     );
     displayIssues(openIssues);
+    issueCount(openIssues);
   } 
   else if (type === "closed") {
     activeButton("tab-closed");
@@ -187,6 +191,7 @@ function switchTab(type) {
       (issue) => issue.status.toLowerCase() === "closed",
     );
     displayIssues(closedIssues);
+    issueCount(closedIssues);
   }
 }
 
