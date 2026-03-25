@@ -4,7 +4,7 @@ let allIssues = [];
 // data from API
 async function loadIssues() {
   const res = await fetch(
-    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues"
   );
   const data = await res.json();
 
@@ -12,6 +12,7 @@ async function loadIssues() {
   allIssues = data.data;
 
   // show all by default
+  switchTab("all");
   displayIssues(allIssues);
 }
 
@@ -148,16 +149,40 @@ function displayIssues(issues) {
   });
 }
 
+// document.getElementById("issuesAll").classList.remove("bg-red-700" , "text-white");
+// document.getElementById("tab-open").classList.remove("bg-[#4A00FF]" , "text-white");
+// document.getElementById("tab-closed").classList.remove("bg-[#4A00FF]" , "text-white");
+
+function activeButton(activated) {
+  const buttons = document.querySelectorAll(".tab-btn");
+
+  // all buttons inactive
+  buttons.forEach(btn => {
+    btn.classList.remove("bg-[#4A00FF]", "text-white");
+    btn.classList.add("bg-white", "text-gray-700");
+  });
+
+  // selected button active
+  const activeBtn = document.getElementById(activated);
+  activeBtn.classList.remove("bg-white", "text-gray-700");
+  activeBtn.classList.add("bg-[#4A00FF]", "text-white");
+}
+
 // Switch tabs
 function switchTab(type) {
   if (type === "all") {
+    activeButton("issuesAll");
     displayIssues(allIssues);
-  } else if (type === "open") {
+  } 
+  else if (type === "open") {
+    activeButton("tab-open");
     const openIssues = allIssues.filter(
       (issue) => issue.status.toLowerCase() === "open",
     );
     displayIssues(openIssues);
-  } else if (type === "closed") {
+  } 
+  else if (type === "closed") {
+    activeButton("tab-closed");
     const closedIssues = allIssues.filter(
       (issue) => issue.status.toLowerCase() === "closed",
     );
