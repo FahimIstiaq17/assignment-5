@@ -1,6 +1,9 @@
 
 let allIssues = [];
 
+const loadingSpinner = document.getElementById("loadingSpinner");
+
+
 // data from API
 async function loadIssues() {
   loadingSpinner.classList.remove("hidden");
@@ -176,6 +179,14 @@ function issueCount(issues) {
 
 // Switch tabs
 function switchTab(type) {
+
+  const container = document.getElementById("issuesContainer");
+
+  loadingSpinner.classList.remove("hidden");
+  container.classList.add("hidden");
+  
+  setTimeout(() => {
+
   if (type === "all") {
     activeButton("issuesAll");
     displayIssues(allIssues);
@@ -197,6 +208,10 @@ function switchTab(type) {
     displayIssues(closedIssues);
     issueCount(closedIssues);
   }
+
+  loadingSpinner.classList.add("hidden");
+  container.classList.remove("hidden");
+  }, 0);
 }
 
 loadIssues();
