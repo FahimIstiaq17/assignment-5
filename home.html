@@ -88,7 +88,7 @@
             <button
               id="tab-open"
               onclick="switchTab('open')"
-              class="tab-btn btn btn-primary bg-[#4A00FF] text-white  hover:bg-gray-300 hover:text-gray-700"
+              class="tab-btn btn btn-primary bg-[#4A00FF] text-white hover:bg-gray-300 hover:text-gray-700"
             >
               Open
             </button>
@@ -114,7 +114,9 @@
             <img src="./assets/Aperture.png" alt="" class="" />
           </div>
           <div>
-            <h1 class="font-semibold text-xl sm:text-2xl"><span id="total-count">50</span> Issues</h1>
+            <h1 class="font-semibold text-xl sm:text-2xl">
+              <span id="total-count">50</span> Issues
+            </h1>
             <p class="text-[#64748B]">Track and manage your project issues</p>
           </div>
         </div>
@@ -133,8 +135,15 @@
       <div
         id="issuesContainer"
         class="bg-[#FBFBFB] w-11/12 mx-auto mt-0.5 p-3 lg:p-6 rounded-md shadow-sm grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-4">
+
       </div>
-      
+
+      <div
+        id="loadingSpinner"
+        class="h-[60vh] hidden justify-center items-center">
+        <span class="loading loading-spinner loading-xl"></span>
+      </div>
+
     </section>
 
     <!-- PopUp tab -->
