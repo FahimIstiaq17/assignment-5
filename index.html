@@ -45,15 +45,15 @@
   <body class="bg-[#F8FAFC]">
     <!-- Login Interface -->
     <section class="login-section min-h-screen max-w-xl mx-auto py-25">
-      <div class="card bg-base-100 shadow-2xl">
-        <div class="card-body p-8">
+      <div class="card bg-base-100 shadow-2xl w-full max-w-md sm:max-w-lg">
+        <div class="card-body p-6 sm:p-8">
           <div class="justify-items-center">
-            <img src="./assets/github-logo.png" alt="" class="pb-6" />
-            <h1 class="font-semibold text-2xl">GitHub Issues Tracker</h1>
-            <p class="text-[#64748B]">Sign in to manage your issues</p>
+            <img src="./assets/github-logo.png" alt="" class="pb-3 sm:pb-6 w-16 sm:w-20" />
+            <h1 class="font-semibold text-xl sm:text-2xl">GitHub Issues Tracker</h1>
+            <p class="text-[#64748B] text-sm sm:text-base">Sign in to manage your issues</p>
           </div>
           <fieldset class="fieldset">
-            <label class="label font-medium text-[16px] text-[#1F2937]"
+            <label class="label font-medium text-sm sm:text-base text-[#1F2937]"
               >Username</label
             >
             <input
@@ -63,7 +63,7 @@
               placeholder="Enter Username"
             />
             <p class="text-[#4A00FF]">Default: admin</p>
-            <label class="label font-medium text-[16px] text-[#1F2937]"
+            <label class="label font-medium text-sm sm:text-base text-[#1F2937]"
               >Password</label
             >
             <input
@@ -75,7 +75,7 @@
             <p class="text-[#4A00FF]">Default: admin123</p>
             <button
               id="sign-btn"
-              class="btn btn-neutral bg-[#4A00FF] my-4 font-semibold text-[16px]"
+              class="btn btn-neutral bg-[#4A00FF] my-4 font-semibold text-sm sm:text-base"
             >
               Sign In
             </button>
@@ -88,12 +88,12 @@
           </div>
 
           <div class="text-center">
-            <p class="text-[#64748B]">Demo Credentials:</p>
-            <div class="bg-[#F8FAFC] py-6 rounded-2xl">
-              <h1 class="text-[#1F2937]">
+            <p class="text-[#64748B] text-sm sm:text-base">Demo Credentials:</p>
+            <div class="bg-[#F8FAFC] py-3 sm:py-6 rounded-2xl">
+              <h1 class="text-[#1F2937] text-sm sm:text-base">
                 <span class="font-semibold">Username:</span> admin
               </h1>
-              <h1 class="text-[#1F2937]">
+              <h1 class="text-[#1F2937] text-sm sm:text-base">
                 <span class="font-semibold">Password:</span> admin123
               </h1>
             </div>
