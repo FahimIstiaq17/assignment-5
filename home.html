@@ -56,6 +56,7 @@
         </div>
         <div class="flex gap-1.5 items-center flex-wrap">
           <input
+            id="searchInput"
             type="text"
             placeholder="Search issues..."
             class="input input-bordered w-15 sm:w-auto"
@@ -134,20 +135,20 @@
       <!-- All Cards -->
       <div
         id="issuesContainer"
-        class="bg-[#FBFBFB] w-11/12 mx-auto mt-0.5 p-3 lg:p-6 rounded-md shadow-sm grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-4">
+        class="bg-[#FBFBFB] w-11/12 mx-auto mt-0.5 p-3 lg:p-6 rounded-md shadow-sm grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-4"
+      ></div>
 
-      </div>
-
+      <!-- loading spinner  -->
       <div
         id="loadingSpinner"
-        class="h-[60vh] hidden justify-center items-center">
+        class="h-[60vh] hidden justify-center items-center"
+      >
         <span class="loading loading-spinner loading-xl"></span>
       </div>
-
     </section>
 
     <!-- PopUp tab -->
-    <section class="hidden max-w-[700px] mx-auto">
+    <!-- <section class="hidden max-w-[700px] mx-auto">
       <div class="bg-white rounded-2xl p-8">
         <h1 class="font-bold text-2xl text-[#1F2937]">
           Fix broken image uploads
@@ -192,7 +193,62 @@
           <button class="btn btn-primary">Close</button>
         </div>
       </div>
-    </section>
+    </section> -->
+
+    <!-- Issues modal  -->
+    <div class="w-11/12 mx-auto">
+      <!-- Open the modal using ID.showModal() method -->
+      <dialog id="issueModal" class="modal">
+        <div class="modal-box">
+
+          <div class="bg-white rounded-2xl p-8">
+            <!-- Title -->
+            <h1 class="font-bold text-2xl text-[#1F2937]" id="modalTitle">
+              
+            </h1>
+            <!-- status -->
+            <div class="flex items-center space-x-3 pt-2">
+              <button class="bg-[#00A96E] text-white rounded-full py-1.5 px-3" id="modalStatus">
+                
+              </button>
+              <!-- opened by -->
+              <p class="text-[#64748B]">Opened by <span id="modalAuthor">  </span></p>
+              <p class="text-[#64748B]" id="modalCreated"></p>
+            </div>
+            <!-- labels  -->
+            <div class="Button flex gap-3 py-6" id="modalLabels">
+              <button class="rounded-full py-1.5 px-2 font-medium text-sm outline-1">
+              </button>
+            </div>
+            <!-- description -->
+            <p class="text-[#64748B]" id="modalDescription">
+              
+            </p>
+
+
+            <div class="bg-[#F8FAFC] p-5 grid grid-cols-2 rounded-md my-6">
+              <div>
+                <p class="text-[#64748B]">Assignee:</p>
+                <h1 class="font-semibold text-[#1F2937]" id="modalAssignee"></h1>
+              </div>
+              <div class="">
+                <p class="text-[#64748B]">Priority:</p>
+                <button
+                  class="bg-[#EF4444] text-white rounded-full py-0.5 px-3" id="modalPriority">
+                  
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
 
     <script src="./index.js"></script>
   </body>

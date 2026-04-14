@@ -2,6 +2,14 @@
 let allIssues = [];
 
 const loadingSpinner = document.getElementById("loadingSpinner");
+const modalTitle = document.getElementById("modalTitle");
+const modalStatus = document.getElementById("modalStatus");
+const modalAuthor = document.getElementById("modalAuthor");
+const modalCreated = document.getElementById("modalCreated");
+const modalLabels = document.getElementById("modalLabels");
+const modalDescription = document.getElementById("modalDescription");
+const modalAssignee = document.getElementById("modalAssignee");
+const modalPriority = document.getElementById("modalPriority");
 
 
 // data from API
@@ -34,7 +42,7 @@ function displayIssues(issues) {
   }
 
   issues.forEach((issue) => {
-    console.log(issue);
+    // console.log(issue);
 
     const div = document.createElement("div");
 
@@ -66,46 +74,46 @@ function displayIssues(issues) {
 
         if (l === "bug") {
           return `
-      <div class="bg-[#FEECEC] rounded-full py-1.5 px-3 font-medium text-[#EF4444] outline-1">
-        <span class="space-x-1.5">
+      <div class="bg-[#FEECEC] rounded-full py-1.5 px-2 font-medium text-[#EF4444] text-sm outline-1">
+        <span>
           <i class="fa-solid fa-bug"></i>
-          <span>${label}</span>
+          <span>${label.toUpperCase()}</span>
         </span>
       </div>
     `;
         } else if (l === "documentation") {
           return `
-      <div class="bg-[#FFF8DB] rounded-full py-1.5 px-3 font-medium text-[#D97706] outline-1">
-        <span class="space-x-1.5">
+      <div class="bg-[#FFF8DB] rounded-full py-1.5 px-2 font-medium text-[#D97706] text-sm outline-1">
+        <span>
           <i class="fa-solid fa-book"></i>
-          <span>${label}</span>
+          <span>${label.toUpperCase()}</span>
         </span>
       </div>
     `;
         } else if (l === "enhancement") {
           return `
-      <div class="bg-[#cbeaff] rounded-full py-1.5 px-3 font-medium text-[#2398f7] outline-1">
-        <span class="space-x-1.5">
+      <div class="bg-[#cbeaff] rounded-full py-1.5 px-2 font-medium text-[#2398f7] text-sm outline-1">
+        <span>
           <i class="fa-solid fa-hand-sparkles"></i>
-          <span>${label}</span>
+          <span>${label.toUpperCase()}</span>
         </span>
       </div>
     `;
         } else if (l === "good first issue") {
           return `
-      <div class="bg-[#EDE9FE] rounded-full py-1.5 px-3 font-medium text-[#7C3AED] outline-1">
-        <span class="space-x-1.5">
+      <div class="bg-[#EDE9FE] rounded-full py-1.5 px-2 font-medium text-[#7C3AED] text-sm outline-1">
+        <span>
           <i class="fa-solid fa-file-circle-exclamation"></i>
-          <span>${label}</span>
+          <span>${label.toUpperCase()}</span>
         </span>
       </div>
     `;
         } else if (l === "help wanted") {
           return `
-      <div class="bg-[#DCFCE7] rounded-full py-1.5 px-3 font-medium text-[#16A34A] outline-1">
-        <span class="space-x-1.5">
+      <div class="bg-[#DCFCE7] rounded-full py-1.5 px-2 font-medium text-[#16A34A] text-sm outline-1">
+        <span>
           <i class="fa-solid fa-handshake"></i>
-          <span>${label}</span>
+          <span>${label.toUpperCase()}</span>
         </span>
       </div>
     `;
@@ -113,7 +121,7 @@ function displayIssues(issues) {
       }).join("");
 
     div.innerHTML = `
-              <div id="card1" class="bg-[#FFFFFF] p-4 rounded-md shadow-md ">
+          <div id="card1" class="bg-[#FFFFFF] p-4 rounded-md shadow-md" onclick="openIssueModal (${issue.id})" >
             <!-- status & Priority -->
             <div class="flex items-center justify-between">
               ${statusUI}
@@ -212,6 +220,107 @@ function switchTab(type) {
   loadingSpinner.classList.add("hidden");
   container.classList.remove("hidden");
   }, 0);
+}
+
+// issue modal 
+const openModal = document.getElementById("issueModal");
+
+
+
+async function openIssueModal(issueId) {
+  console.log(issueId, "issueId");
+  const res = await fetch (
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${issueId}`,
+  );
+  const data = await res.json();
+  const dataDetails = data.data;
+  console.log(dataDetails, "data");
+  
+  openModal.showModal();
+
+  modalTitle.textContent = dataDetails.title;
+  modalStatus.textContent = dataDetails.status;
+  modalAuthor.textContent = dataDetails.author;
+  modalCreated.textContent = dataDetails.createdAt;
+  modalLabels.textContent = dataDetails.labels;
+  modalDescription.textContent = dataDetails.description;
+  modalAssignee.textContent = dataDetails.assignee;
+  modalPriority.textContent = dataDetails.priority;
+
+  modalLabels.innerHTML = ""; // clear previous labels
+
+  modalLabels.innerHTML = dataDetails.labels
+  .map(label => {
+    let color = "";
+    let icon = "";
+
+    if (label.toLowerCase() === "bug") {
+      color = "bg-[#FEECEC] text-[#EF4444]";
+      icon = "fa-bug";
+    } 
+    else if (label.toLowerCase() === "help wanted") {
+      color = "bg-[#DCFCE7] text-[#16A34A]";
+      icon = "fa-handshake";
+    } 
+    else if (label.toLowerCase() === "documentation") {
+      color = "bg-[#FFF8DB] text-[#D97706]";
+      icon = "fa-book";
+    } 
+    else if (label.toLowerCase() === "enhancement") {
+      color = "bg-[#E0F2FE] text-[#0284C7]";
+      icon = "fa-hand-sparkles";
+    } 
+    else if (label.toLowerCase() === "good first issue") {
+      color = "bg-[#EDE9FE] text-[#7C3AED]";
+      icon = "fa-file-circle-exclamation";
+    } 
+    else {
+      color = "bg-gray-200 text-gray-700";
+      icon = "fa-tag";
+    }
+
+    return `
+      <button class="rounded-full py-1.5 px-2 font-medium text-sm outline-1 ${color}">
+        <i class="fa-solid ${icon}"></i> ${label.toUpperCase()}
+      </button>
+    `;
+  })
+  .join("");
+
+  dataDetails.labels.forEach(label => {
+  const button = document.createElement("button");
+
+  button.className =
+    "rounded-full py-1.5 px-2 font-medium text-sm outline-1";
+
+  // optional: dynamic color based on label
+
+
+  // if (label.toLowerCase() === "bug") {
+  //   button.classList.add("bg-[#FEECEC]", "text-[#EF4444]");
+  //   button.innerHTML = `<i class="fa-solid fa-bug"></i> ${label.toUpperCase()}`;
+  // } 
+  // else if (label.toLowerCase() === "help wanted") {
+  //   button.classList.add("bg-[#DCFCE7]", "text-[#16A34A]");
+  //   button.innerHTML = `<i class="fa-solid fa-handshake"></i> ${label.toUpperCase()}`;
+  // } 
+  // else if (label.toLowerCase() === "documentation") {
+  //   button.classList.add("bg-[#FFF8DB]", "text-[#D97706] ");
+  //   button.innerHTML = `<i class="fa-solid fa-book"></i> ${label.toUpperCase()}`;
+  // } 
+  // else if (label.toLowerCase() === "good first issue") {
+  //   button.classList.add("bg-[#FFF8DB]", "text-[#D97706] ");
+  //   button.innerHTML = `<i class="fa-solid fa-book"></i> ${label.toUpperCase()}`;
+  // } 
+  // else {
+  //   button.classList.add("bg-gray-200", "text-gray-700");
+  //   button.textContent = label.toUpperCase();
+  // }
+
+
+  // modalLabels.appendChild(button);
+});
+  
 }
 
 loadIssues();
