@@ -1,4 +1,3 @@
-
 let allIssues = [];
 
 const loadingSpinner = document.getElementById("loadingSpinner");
@@ -11,14 +10,33 @@ const modalDescription = document.getElementById("modalDescription");
 const modalAssignee = document.getElementById("modalAssignee");
 const modalPriority = document.getElementById("modalPriority");
 
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", async () => {
+  const searchText = searchInput.value.trim();
+  // console.log("btn clicked");
+  if (searchText === "") {
+    displayIssues(allIssues);
+    return;
+  }
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`,
+  );
+  const data = await res.json();
+  const issues = data.data;
+  const filtered = issues.filter((issue) =>
+    issue.title.toLowerCase().includes(searchText.toLowerCase()),
+  );
+  displayIssues(filtered);
+});
 
 // data from API
 async function loadIssues() {
   loadingSpinner.classList.remove("hidden");
   loadingSpinner.classList.add("flex");
-  
+
   const res = await fetch(
-    "https://phi-lab-server.vercel.app/api/v1/lab/issues"
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const data = await res.json();
 
@@ -47,7 +65,9 @@ function displayIssues(issues) {
     const div = document.createElement("div");
 
     const borderColor =
-      issue.status.toLowerCase() === "open" ? "border-t-5 border-[#00A96E]" : "border-t-5 border-[#A855F7]";
+      issue.status.toLowerCase() === "open"
+        ? "border-t-5 border-[#00A96E]"
+        : "border-t-5 border-[#A855F7]";
 
     div.className = `${borderColor} pt-1.5 rounded-xl`;
 
@@ -67,7 +87,7 @@ function displayIssues(issues) {
           ? `bg-[#FFF6D1] rounded-full text-[#F59E0B] py-1.5 px-6`
           : `bg-[#EEEFF2] rounded-full text-[#9CA3AF] py-1.5 px-6`;
 
-          // LABELS
+    // LABELS
     const labelsHtml = issue.labels
       .map((label) => {
         const l = label.toLowerCase();
@@ -117,8 +137,9 @@ function displayIssues(issues) {
         </span>
       </div>
     `;
-        }   
-      }).join("");
+        }
+      })
+      .join("");
 
     div.innerHTML = `
           <div id="card1" class="bg-[#FFFFFF] p-4 rounded-md shadow-md" onclick="openIssueModal (${issue.id})" >
@@ -164,12 +185,11 @@ function displayIssues(issues) {
   });
 }
 
-
 function activeButton(activated) {
   const buttons = document.querySelectorAll(".tab-btn");
 
   // all buttons inactive
-  buttons.forEach(btn => {
+  buttons.forEach((btn) => {
     btn.classList.remove("bg-[#4A00FF]", "text-white");
     btn.classList.add("bg-white", "text-gray-700");
   });
@@ -180,62 +200,55 @@ function activeButton(activated) {
   activeBtn.classList.add("bg-[#4A00FF]", "text-white");
 }
 
-
 function issueCount(issues) {
   document.getElementById("total-count").innerText = issues.length;
 }
 
 // Switch tabs
 function switchTab(type) {
-
   const container = document.getElementById("issuesContainer");
 
   loadingSpinner.classList.remove("hidden");
   container.classList.add("hidden");
-  
+
   setTimeout(() => {
+    if (type === "all") {
+      activeButton("issuesAll");
+      displayIssues(allIssues);
+      issueCount(allIssues);
+    } else if (type === "open") {
+      activeButton("tab-open");
+      const openIssues = allIssues.filter(
+        (issue) => issue.status.toLowerCase() === "open",
+      );
+      displayIssues(openIssues);
+      issueCount(openIssues);
+    } else if (type === "closed") {
+      activeButton("tab-closed");
+      const closedIssues = allIssues.filter(
+        (issue) => issue.status.toLowerCase() === "closed",
+      );
+      displayIssues(closedIssues);
+      issueCount(closedIssues);
+    }
 
-  if (type === "all") {
-    activeButton("issuesAll");
-    displayIssues(allIssues);
-    issueCount(allIssues);
-  } 
-  else if (type === "open") {
-    activeButton("tab-open");
-    const openIssues = allIssues.filter(
-      (issue) => issue.status.toLowerCase() === "open",
-    );
-    displayIssues(openIssues);
-    issueCount(openIssues);
-  } 
-  else if (type === "closed") {
-    activeButton("tab-closed");
-    const closedIssues = allIssues.filter(
-      (issue) => issue.status.toLowerCase() === "closed",
-    );
-    displayIssues(closedIssues);
-    issueCount(closedIssues);
-  }
-
-  loadingSpinner.classList.add("hidden");
-  container.classList.remove("hidden");
+    loadingSpinner.classList.add("hidden");
+    container.classList.remove("hidden");
   }, 0);
 }
 
-// issue modal 
+// issue modal
 const openModal = document.getElementById("issueModal");
-
-
 
 async function openIssueModal(issueId) {
   console.log(issueId, "issueId");
-  const res = await fetch (
+  const res = await fetch(
     `https://phi-lab-server.vercel.app/api/v1/lab/issue/${issueId}`,
   );
   const data = await res.json();
   const dataDetails = data.data;
   console.log(dataDetails, "data");
-  
+
   openModal.showModal();
 
   modalTitle.textContent = dataDetails.title;
@@ -247,105 +260,40 @@ async function openIssueModal(issueId) {
   modalAssignee.textContent = dataDetails.assignee;
   modalPriority.textContent = dataDetails.priority;
 
-  modalLabels.innerHTML = ""; // clear previous labels
+  modalLabels.innerHTML = "";
 
   modalLabels.innerHTML = dataDetails.labels
-  .map(label => {
-    let color = "";
-    let icon = "";
+    .map((label) => {
+      let color = "";
+      let icon = "";
 
-    if (label.toLowerCase() === "bug") {
-      color = "bg-[#FEECEC] text-[#EF4444]";
-      icon = "fa-bug";
-    } 
-    else if (label.toLowerCase() === "help wanted") {
-      color = "bg-[#DCFCE7] text-[#16A34A]";
-      icon = "fa-handshake";
-    } 
-    else if (label.toLowerCase() === "documentation") {
-      color = "bg-[#FFF8DB] text-[#D97706]";
-      icon = "fa-book";
-    } 
-    else if (label.toLowerCase() === "enhancement") {
-      color = "bg-[#E0F2FE] text-[#0284C7]";
-      icon = "fa-hand-sparkles";
-    } 
-    else if (label.toLowerCase() === "good first issue") {
-      color = "bg-[#EDE9FE] text-[#7C3AED]";
-      icon = "fa-file-circle-exclamation";
-    } 
-    else {
-      color = "bg-gray-200 text-gray-700";
-      icon = "fa-tag";
-    }
+      if (label.toLowerCase() === "bug") {
+        color = "bg-[#FEECEC] text-[#EF4444]";
+        icon = "fa-bug";
+      } else if (label.toLowerCase() === "help wanted") {
+        color = "bg-[#DCFCE7] text-[#16A34A]";
+        icon = "fa-handshake";
+      } else if (label.toLowerCase() === "documentation") {
+        color = "bg-[#FFF8DB] text-[#D97706]";
+        icon = "fa-book";
+      } else if (label.toLowerCase() === "enhancement") {
+        color = "bg-[#E0F2FE] text-[#0284C7]";
+        icon = "fa-hand-sparkles";
+      } else if (label.toLowerCase() === "good first issue") {
+        color = "bg-[#EDE9FE] text-[#7C3AED]";
+        icon = "fa-file-circle-exclamation";
+      } else {
+        color = "bg-gray-200 text-gray-700";
+        icon = "fa-tag";
+      }
 
-    return `
+      return `
       <button class="rounded-full py-1.5 px-2 font-medium text-sm outline-1 ${color}">
         <i class="fa-solid ${icon}"></i> ${label.toUpperCase()}
       </button>
     `;
-  })
-  .join("");
-
-  dataDetails.labels.forEach(label => {
-  const button = document.createElement("button");
-
-  button.className =
-    "rounded-full py-1.5 px-2 font-medium text-sm outline-1";
-
-  // optional: dynamic color based on label
-
-
-  // if (label.toLowerCase() === "bug") {
-  //   button.classList.add("bg-[#FEECEC]", "text-[#EF4444]");
-  //   button.innerHTML = `<i class="fa-solid fa-bug"></i> ${label.toUpperCase()}`;
-  // } 
-  // else if (label.toLowerCase() === "help wanted") {
-  //   button.classList.add("bg-[#DCFCE7]", "text-[#16A34A]");
-  //   button.innerHTML = `<i class="fa-solid fa-handshake"></i> ${label.toUpperCase()}`;
-  // } 
-  // else if (label.toLowerCase() === "documentation") {
-  //   button.classList.add("bg-[#FFF8DB]", "text-[#D97706] ");
-  //   button.innerHTML = `<i class="fa-solid fa-book"></i> ${label.toUpperCase()}`;
-  // } 
-  // else if (label.toLowerCase() === "good first issue") {
-  //   button.classList.add("bg-[#FFF8DB]", "text-[#D97706] ");
-  //   button.innerHTML = `<i class="fa-solid fa-book"></i> ${label.toUpperCase()}`;
-  // } 
-  // else {
-  //   button.classList.add("bg-gray-200", "text-gray-700");
-  //   button.textContent = label.toUpperCase();
-  // }
-
-
-  // modalLabels.appendChild(button);
-});
-  
+    })
+    .join("");
 }
 
 loadIssues();
-
-// SignIn page
-document.getElementById("sign-btn").addEventListener("click", function () {
-  // get the username
-  const usernameInput = document.getElementById("input-username");
-  const username = usernameInput.value;
-  console.log(username);
-
-  // get the pass
-  const pinInput = document.getElementById("input-pin");
-  const pin = pinInput.value;
-  console.log(pin);
-
-  // match username & pass
-  if (username == "admin" && pin == "admin123") {
-    // true> alert > homepage
-    alert("SignIn Successful");
-    window.location.assign("/home.html");
-  } else {
-    // false> alert >return
-    alert("SignIn Failed");
-    return;
-  }
-});
-
